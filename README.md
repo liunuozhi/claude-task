@@ -124,3 +124,7 @@ breaks a scan.
 
 Inspired by [L1AD/claude-task-viewer](https://github.com/L1AD/claude-task-viewer).
 
+## License
+
+[MIT](LICENSE)
+
