@@ -41,7 +41,9 @@ The global **Active** feed and the **Sessions** picker open as floating overlays
 curl -fsSL https://raw.githubusercontent.com/liunuozhi/claude-task/main/install.sh | sh
 ```
 
-Installs to `/usr/local/bin` by default. Override with `BIN_DIR=$HOME/.local/bin`.
+Installs to `~/.local/bin` by default — no sudo required. Override the location
+with `BIN_DIR=/some/writable/dir`. On macOS `~/.local/bin` isn't on `PATH` by
+default; if it's missing the script prints the line to add for your shell.
 
 ### Go
 
@@ -62,8 +64,9 @@ claude-task upgrade
 ```
 
 It downloads the latest prebuilt binary from GitHub Releases and replaces the
-running executable. If it lives in a system directory you can't write to (e.g.
-`/usr/local/bin`), re-run with `sudo claude-task upgrade`.
+running executable in place. With the default `~/.local/bin` install this needs
+no sudo; if you installed into a root-owned directory, run it with the same
+privileges you used to install.
 
 ### Uninstall
 
@@ -77,7 +80,7 @@ rm "$(command -v claude-task)"
 If it isn't on your `PATH`, remove it from wherever you installed it:
 
 ```sh
-rm /usr/local/bin/claude-task        # curl installer (or your BIN_DIR)
+rm ~/.local/bin/claude-task          # curl installer (or your BIN_DIR)
 rm "$(go env GOPATH)/bin/claude-task" # go install
 ```
 

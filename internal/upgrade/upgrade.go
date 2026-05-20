@@ -144,7 +144,7 @@ func replaceExecutable(path string, data []byte) error {
 	dir := filepath.Dir(path)
 	tmp, err := os.CreateTemp(dir, ".claude-task-upgrade-*")
 	if err != nil {
-		return fmt.Errorf("cannot write to %s: %w (try: sudo claude-task upgrade)", dir, err)
+		return fmt.Errorf("cannot write to %s: %w", dir, err)
 	}
 	tmpName := tmp.Name()
 	defer os.Remove(tmpName) // no-op once the rename succeeds
@@ -160,7 +160,7 @@ func replaceExecutable(path string, data []byte) error {
 		return err
 	}
 	if err := os.Rename(tmpName, path); err != nil {
-		return fmt.Errorf("cannot replace %s: %w (try: sudo claude-task upgrade)", path, err)
+		return fmt.Errorf("cannot replace %s: %w", path, err)
 	}
 	return nil
 }
