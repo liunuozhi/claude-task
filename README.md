@@ -65,6 +65,24 @@ It downloads the latest prebuilt binary from GitHub Releases and replaces the
 running executable. If it lives in a system directory you can't write to (e.g.
 `/usr/local/bin`), re-run with `sudo claude-task upgrade`.
 
+### Uninstall
+
+claude-task is a single self-contained binary — it writes nothing to your system
+and reads `~/.claude` read-only — so uninstalling is just deleting the binary:
+
+```sh
+rm "$(command -v claude-task)"
+```
+
+If it isn't on your `PATH`, remove it from wherever you installed it:
+
+```sh
+rm /usr/local/bin/claude-task        # curl installer (or your BIN_DIR)
+rm "$(go env GOPATH)/bin/claude-task" # go install
+```
+
+Use `sudo` if the binary lives in a system directory you can't write to.
+
 ## Usage
 
 ```sh
