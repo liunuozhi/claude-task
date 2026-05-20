@@ -12,10 +12,19 @@ import (
 	"github.com/liunuozhi/claude-task/internal/watcher"
 )
 
+// version is set at build time via -ldflags "-X main.version=...".
+var version = "dev"
+
 func main() {
 	dirFlag := flag.String("dir", "", "Claude base directory (default: $CLAUDE_DIR or ~/.claude)")
 	noWatch := flag.Bool("no-watch", false, "disable live file watching")
+	showVersion := flag.Bool("version", false, "print version and exit")
 	flag.Parse()
+
+	if *showVersion {
+		fmt.Println("claude-task", version)
+		return
+	}
 
 	base := claude.ResolveClaudeDir(*dirFlag)
 	if fi, err := os.Stat(base); err != nil || !fi.IsDir() {

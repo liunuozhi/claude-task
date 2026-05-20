@@ -35,6 +35,16 @@ The global **Active** feed and the **Sessions** picker open as floating overlays
 
 ## Install
 
+### curl (prebuilt binary, no Go required)
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/liunuozhi/claude-task/main/install.sh | sh
+```
+
+Installs to `/usr/local/bin` by default. Override with `BIN_DIR=$HOME/.local/bin`.
+
+### Go
+
 Requires Go ≥ 1.26.
 
 ```sh
