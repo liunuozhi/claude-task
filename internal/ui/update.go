@@ -122,10 +122,10 @@ func (m Model) onKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		m.openOverlay(overlaySessions)
 		return m, nil
 	case key.Matches(msg, m.keys.Tab):
-		m.setFocus(cycleTaskPane(m.focus, 1))
+		m.setFocus(stepTaskPane(m.focus, 1))
 		return m, nil
 	case key.Matches(msg, m.keys.ShiftTab):
-		m.setFocus(cycleTaskPane(m.focus, -1))
+		m.setFocus(stepTaskPane(m.focus, -1))
 		return m, nil
 	case key.Matches(msg, m.keys.ScrollDown):
 		m.scrollFocused(1)

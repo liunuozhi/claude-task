@@ -27,8 +27,8 @@ const paneCount = 6
 // here is its displayed index ([1]..[4]) and its number-jump key.
 var mainPanes = []Focus{FocusTodo, FocusDoing, FocusDone, FocusPreview}
 
-// taskPanes are the panes h/l (and Tab) cycle through. Preview is excluded: it's
-// reached by diving in with Enter or jumping with its number key, not by cycling.
+// taskPanes are the panes h/l (and Tab) step through. Preview is excluded: it's
+// reached by diving in with Enter or jumping with its number key, not by stepping.
 var taskPanes = []Focus{FocusTodo, FocusDoing, FocusDone}
 
 func (f Focus) String() string {
@@ -50,10 +50,11 @@ func (f Focus) String() string {
 	}
 }
 
-// cycleTaskPane steps focus through the task panes by delta (wrapping). When
-// focus is off the ring (e.g. on Preview), it enters at the near end so forward
-// lands on the first pane and backward on the last.
-func cycleTaskPane(f Focus, delta int) Focus {
+// stepTaskPane moves focus through the task panes by delta, clamped at the ends:
+// l stops at Done, h stops at Todo, neither wraps. When focus is off the ring
+// (e.g. on Preview), it enters at the near end so forward lands on the first pane
+// and backward on the last.
+func stepTaskPane(f Focus, delta int) Focus {
 	n := len(taskPanes)
 	i := slices.Index(taskPanes, f)
 	if i < 0 {
@@ -62,7 +63,7 @@ func cycleTaskPane(f Focus, delta int) Focus {
 		}
 		return taskPanes[n-1]
 	}
-	return taskPanes[((i+delta)%n+n)%n]
+	return taskPanes[min(max(i+delta, 0), n-1)]
 }
 
 // paneIndex is a pane's displayed [N] label and number-jump key. The task panes
