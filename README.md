@@ -53,12 +53,25 @@ go install github.com/liunuozhi/claude-task@latest
 go build -o claude-task .
 ```
 
+### Upgrade
+
+Whatever way you installed it, upgrade in place to the latest release:
+
+```sh
+claude-task upgrade
+```
+
+It downloads the latest prebuilt binary from GitHub Releases and replaces the
+running executable. If it lives in a system directory you can't write to (e.g.
+`/usr/local/bin`), re-run with `sudo claude-task upgrade`.
+
 ## Usage
 
 ```sh
 claude-task                 # watch ~/.claude
 claude-task --dir /path     # watch a specific Claude directory
 claude-task --no-watch      # one-shot, no live updates
+claude-task upgrade         # self-update to the latest release
 ```
 
 The base directory is resolved as `--dir` > `$CLAUDE_DIR` > `~/.claude`.
@@ -69,7 +82,7 @@ The base directory is resolved as `--dir` > `$CLAUDE_DIR` > `~/.claude`.
 |-----|--------|
 | `1` / `2` / `3` | jump to Pending / In Progress / Completed |
 | `0` | jump to Preview |
-| `Tab` / `Shift-Tab` (or `l` / `h`) | cycle the three task panes |
+| `Tab` / `Shift-Tab` (or `l` / `h`) | step through the three task panes (`l` stops at Completed, `h` at Pending) |
 | `j` / `k` | move the selection in the focused pane (the Preview follows), or scroll the Preview when it's focused |
 | `J` / `K` | scroll the Preview a line |
 | `Enter` | open the selected task in the Preview |

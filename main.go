@@ -9,6 +9,7 @@ import (
 
 	"github.com/liunuozhi/claude-task/internal/claude"
 	"github.com/liunuozhi/claude-task/internal/ui"
+	"github.com/liunuozhi/claude-task/internal/upgrade"
 	"github.com/liunuozhi/claude-task/internal/watcher"
 )
 
@@ -16,6 +17,16 @@ import (
 var version = "dev"
 
 func main() {
+	// Subcommands are dispatched before flag parsing. Flags (which start with
+	// "-") fall through to the default behaviour of launching the TUI.
+	if len(os.Args) > 1 && os.Args[1] == "upgrade" {
+		if err := upgrade.Run(version); err != nil {
+			fmt.Fprintln(os.Stderr, "claude-task:", err)
+			os.Exit(1)
+		}
+		return
+	}
+
 	dirFlag := flag.String("dir", "", "Claude base directory (default: $CLAUDE_DIR or ~/.claude)")
 	noWatch := flag.Bool("no-watch", false, "disable live file watching")
 	showVersion := flag.Bool("version", false, "print version and exit")
